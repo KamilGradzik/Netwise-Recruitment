@@ -23,6 +23,16 @@ class Program
             });
         });
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(
+                name: "DevPolicy",
+                policy =>
+                {
+                    policy.WithOrigins("*");
+                });
+        });
+
         var app = builder.Build();
 
         
@@ -30,8 +40,10 @@ class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseCors("DevPolicy");
         }   
 
+        
         app.UseHttpsRedirection();
         app.MapControllers();
 
